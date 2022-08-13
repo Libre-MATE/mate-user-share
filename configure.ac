@@ -114,7 +114,7 @@ AC_SUBST(installdir, $installdir)
 
 dnl ==========================================================================
 
-GETTEXT_PACKAGE=mate-user-share
+GETTEXT_PACKAGE=AC_PACKAGE_NAME
 AC_SUBST(GETTEXT_PACKAGE)
 AC_DEFINE_UNQUOTED([GETTEXT_PACKAGE],"$GETTEXT_PACKAGE", [The gettext package])
 AM_GNU_GETTEXT_VERSION([0.19.8])
