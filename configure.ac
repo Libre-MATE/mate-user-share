@@ -4,9 +4,8 @@ AC_INIT([mate-user-share],
         [mate-user-share],
         [https://github.com/Libre-MATE/mate-user-share/])
 AC_PREREQ(2.60)
-
+AC_COPYRIGHT([Copyright (C) 2022 Libre MATE])
 AC_CONFIG_MACRO_DIR([m4])
-
 AM_INIT_AUTOMAKE([1.9 dist-xz no-dist-gzip check-news])
 AC_CONFIG_HEADERS([config.h])
 
