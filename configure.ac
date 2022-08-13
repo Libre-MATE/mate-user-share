@@ -1,9 +1,9 @@
-AC_PREREQ(2.60)
 AC_INIT([mate-user-share],
         [1.26.0],
         [https://github.com/Libre-MATE/mate-user-share/issues],
         [mate-user-share],
         [https://github.com/Libre-MATE/mate-user-share/])
+AC_PREREQ(2.60)
 
 AC_CONFIG_MACRO_DIR([m4])
 
