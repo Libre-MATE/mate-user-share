@@ -342,7 +342,7 @@ static void file_sharing_bluetooth_obexpush_notify_changed(GSettings *settings,
 }
 #endif /* HAVE_BLUETOOTH */
 
-static RETSIGTYPE cleanup_handler(int sig) {
+static void cleanup_handler(int sig) {
   http_down();
 #ifdef HAVE_BLUETOOTH
   obexftp_down();
