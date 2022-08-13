@@ -1,3 +1,4 @@
+AC_PREREQ(2.60)
 AC_INIT([mate-user-share],
         [1.26.0],
         [https://github.com/Libre-MATE/mate-user-share/issues],
@@ -25,10 +26,9 @@ AC_PROG_CPP
 AC_PROG_INSTALL
 AC_PROG_LN_S
 AC_PROG_MAKE_SET
-AM_DISABLE_STATIC
-AM_PROG_LIBTOOL
 AC_PATH_XTRA
 PKG_PROG_PKG_CONFIG
+LT_INIT([disable-static])
 
 AC_TYPE_PID_T
 AC_TYPE_SIGNAL
