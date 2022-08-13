@@ -21,112 +21,97 @@
  *
  */
 
-#include "config.h"
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
+
+#include "caja-share-bar.h"
 
 #include <glib/gi18n-lib.h>
 #include <gtk/gtk.h>
 
-#include "caja-share-bar.h"
-
-struct CajaShareBarPrivate
-{
-	GtkWidget   *label;
+struct CajaShareBarPrivate {
+  GtkWidget *label;
 };
 
-enum {
-	PROP_0,
-	PROP_LABEL
-};
+enum { PROP_0, PROP_LABEL };
 
-G_DEFINE_TYPE_WITH_PRIVATE (CajaShareBar, caja_share_bar, GTK_TYPE_INFO_BAR)
+G_DEFINE_TYPE_WITH_PRIVATE(CajaShareBar, caja_share_bar, GTK_TYPE_INFO_BAR)
 
-static void
-caja_share_bar_set_property (GObject            *object,
-                                guint               prop_id,
-                                const GValue       *value,
-                                GParamSpec         *pspec)
-{
-        CajaShareBar *self;
+static void caja_share_bar_set_property(GObject *object, guint prop_id,
+                                        const GValue *value,
+                                        GParamSpec *pspec) {
+  CajaShareBar *self;
 
-        self = CAJA_SHARE_BAR (object);
+  self = CAJA_SHARE_BAR(object);
 
-        switch (prop_id) {
-	case PROP_LABEL: {
-		gtk_label_set_text (GTK_LABEL (self->priv->label),
-				    g_value_get_string (value));
-		break;
-	}
-        default:
-                G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
-                break;
-        }
+  switch (prop_id) {
+    case PROP_LABEL: {
+      gtk_label_set_text(GTK_LABEL(self->priv->label),
+                         g_value_get_string(value));
+      break;
+    }
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
+      break;
+  }
 }
 
-static void
-caja_share_bar_class_init (CajaShareBarClass *klass)
-{
-        GObjectClass   *object_class = G_OBJECT_CLASS (klass);
+static void caja_share_bar_class_init(CajaShareBarClass *klass) {
+  GObjectClass *object_class = G_OBJECT_CLASS(klass);
 
-        object_class->set_property = caja_share_bar_set_property;
+  object_class->set_property = caja_share_bar_set_property;
 
-        g_object_class_install_property (G_OBJECT_CLASS(klass), PROP_LABEL,
-					 g_param_spec_string ("label", "label",
-							      "The widget's main label",
-							      NULL,
-							      G_PARAM_WRITABLE));
+  g_object_class_install_property(
+      G_OBJECT_CLASS(klass), PROP_LABEL,
+      g_param_spec_string("label", "label", "The widget's main label", NULL,
+                          G_PARAM_WRITABLE));
 }
 
-static void
-caja_share_bar_init (CajaShareBar *bar)
-{
-	GtkWidget *content_area;
-	GtkWidget *action_area;
-	GtkWidget *label;
-	GtkWidget *vbox;
-	GtkWidget *button;
-	PangoAttrList *attrs;
+static void caja_share_bar_init(CajaShareBar *bar) {
+  GtkWidget *content_area;
+  GtkWidget *action_area;
+  GtkWidget *label;
+  GtkWidget *vbox;
+  GtkWidget *button;
+  PangoAttrList *attrs;
 
-	bar->priv = caja_share_bar_get_instance_private (bar);
+  bar->priv = caja_share_bar_get_instance_private(bar);
 
-	content_area = gtk_info_bar_get_content_area (GTK_INFO_BAR (bar));
-	action_area = gtk_info_bar_get_action_area (GTK_INFO_BAR (bar));
-	gtk_button_box_set_layout (GTK_BUTTON_BOX (action_area), GTK_BUTTONBOX_CENTER);
+  content_area = gtk_info_bar_get_content_area(GTK_INFO_BAR(bar));
+  action_area = gtk_info_bar_get_action_area(GTK_INFO_BAR(bar));
+  gtk_button_box_set_layout(GTK_BUTTON_BOX(action_area), GTK_BUTTONBOX_CENTER);
 
-	vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 3);
-	gtk_container_add (GTK_CONTAINER (content_area), vbox);
+  vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 3);
+  gtk_container_add(GTK_CONTAINER(content_area), vbox);
 
-	attrs = pango_attr_list_new ();
-	pango_attr_list_insert (attrs, pango_attr_weight_new (PANGO_WEIGHT_BOLD));
-	label = gtk_label_new (_("Personal File Sharing"));
-	gtk_label_set_attributes (GTK_LABEL (label), attrs);
-	pango_attr_list_unref (attrs);
+  attrs = pango_attr_list_new();
+  pango_attr_list_insert(attrs, pango_attr_weight_new(PANGO_WEIGHT_BOLD));
+  label = gtk_label_new(_("Personal File Sharing"));
+  gtk_label_set_attributes(GTK_LABEL(label), attrs);
+  pango_attr_list_unref(attrs);
 
-	gtk_label_set_xalign (GTK_LABEL (label), 0.0);
-	gtk_label_set_yalign (GTK_LABEL (label), 0.5);
-	gtk_widget_show (label);
-	gtk_container_add (GTK_CONTAINER (vbox), label);
+  gtk_label_set_xalign(GTK_LABEL(label), 0.0);
+  gtk_label_set_yalign(GTK_LABEL(label), 0.5);
+  gtk_widget_show(label);
+  gtk_container_add(GTK_CONTAINER(vbox), label);
 
-	bar->priv->label = gtk_label_new (NULL);
-	gtk_label_set_xalign (GTK_LABEL (bar->priv->label), 0.0);
-	gtk_label_set_yalign (GTK_LABEL (bar->priv->label), 0.5);
-	gtk_widget_show (bar->priv->label);
-	gtk_container_add (GTK_CONTAINER (vbox), bar->priv->label);
+  bar->priv->label = gtk_label_new(NULL);
+  gtk_label_set_xalign(GTK_LABEL(bar->priv->label), 0.0);
+  gtk_label_set_yalign(GTK_LABEL(bar->priv->label), 0.5);
+  gtk_widget_show(bar->priv->label);
+  gtk_container_add(GTK_CONTAINER(vbox), bar->priv->label);
 
-	button = gtk_info_bar_add_button (GTK_INFO_BAR (bar),
-					  _("Preferences"),
-					  CAJA_SHARE_BAR_RESPONSE_PREFERENCES);
+  button = gtk_info_bar_add_button(GTK_INFO_BAR(bar), _("Preferences"),
+                                   CAJA_SHARE_BAR_RESPONSE_PREFERENCES);
 
-	gtk_widget_set_tooltip_text (button,
-				     _("Launch Personal File Sharing Preferences"));
+  gtk_widget_set_tooltip_text(button,
+                              _("Launch Personal File Sharing Preferences"));
 
-	gtk_widget_show_all (vbox);
+  gtk_widget_show_all(vbox);
 }
 
-GtkWidget *
-caja_share_bar_new (const char *label)
-{
-        return g_object_new (CAJA_TYPE_SHARE_BAR,
-                             "message-type", GTK_MESSAGE_QUESTION,
-			     "label", label,
-                             NULL);
+GtkWidget *caja_share_bar_new(const char *label) {
+  return g_object_new(CAJA_TYPE_SHARE_BAR, "message-type", GTK_MESSAGE_QUESTION,
+                      "label", label, NULL);
 }

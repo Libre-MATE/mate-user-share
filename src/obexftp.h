@@ -24,7 +24,7 @@
 
 #include <glib.h>
 
-void obexftp_up (void);
-void obexftp_down (void);
-void obexftp_restart (void);
-gboolean obexftp_init (void);
+void obexftp_up(void);
+void obexftp_down(void);
+void obexftp_restart(void);
+gboolean obexftp_init(void);

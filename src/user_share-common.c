@@ -23,70 +23,52 @@
  *
  */
 
-#include <string.h>
-
 #include "user_share-common.h"
 
-static char *
-lookup_special_dir (GUserDirectory directory,
-		    const char *name,
-		    gboolean create_dir)
-{
-	const char *special_dir;
-	char *dir;
+#include <string.h>
 
-	special_dir = g_get_user_special_dir (directory);
-	if (special_dir != NULL && strcmp (special_dir, g_get_home_dir ()) != 0) {
-		if (create_dir != FALSE)
-			g_mkdir_with_parents (special_dir, 0755);
-		return g_strdup (special_dir);
-	}
+static char *lookup_special_dir(GUserDirectory directory, const char *name,
+                                gboolean create_dir) {
+  const char *special_dir;
+  char *dir;
 
-	dir = g_build_filename (g_get_home_dir (), name, NULL);
-	if (create_dir != FALSE)
-		g_mkdir_with_parents (dir, 0755);
-	return dir;
+  special_dir = g_get_user_special_dir(directory);
+  if (special_dir != NULL && strcmp(special_dir, g_get_home_dir()) != 0) {
+    if (create_dir != FALSE) g_mkdir_with_parents(special_dir, 0755);
+    return g_strdup(special_dir);
+  }
+
+  dir = g_build_filename(g_get_home_dir(), name, NULL);
+  if (create_dir != FALSE) g_mkdir_with_parents(dir, 0755);
+  return dir;
 }
 
-char *
-lookup_public_dir (void)
-{
-	return lookup_special_dir (G_USER_DIRECTORY_PUBLIC_SHARE,
-				   "Public",
-				   TRUE);
+char *lookup_public_dir(void) {
+  return lookup_special_dir(G_USER_DIRECTORY_PUBLIC_SHARE, "Public", TRUE);
 }
 
-char *
-lookup_download_dir (void)
-{
-	return lookup_special_dir (G_USER_DIRECTORY_DOWNLOAD,
-				   "Downloads",
-				   TRUE);
+char *lookup_download_dir(void) {
+  return lookup_special_dir(G_USER_DIRECTORY_DOWNLOAD, "Downloads", TRUE);
 }
 
-GFile *
-lookup_dir_with_fallback (GUserDirectory directory)
-{
-	GFile *file;
-	char *path;
-	const char *name;
+GFile *lookup_dir_with_fallback(GUserDirectory directory) {
+  GFile *file;
+  char *path;
+  const char *name;
 
-	if (directory == G_USER_DIRECTORY_PUBLIC_SHARE)
-		name = "Public";
-	else if (directory == G_USER_DIRECTORY_DOWNLOAD)
-		name = "Downloads";
-	else
-		g_assert_not_reached ();
+  if (directory == G_USER_DIRECTORY_PUBLIC_SHARE)
+    name = "Public";
+  else if (directory == G_USER_DIRECTORY_DOWNLOAD)
+    name = "Downloads";
+  else
+    g_assert_not_reached();
 
-	path = lookup_special_dir (directory,
-				   name,
-				   FALSE);
+  path = lookup_special_dir(directory, name, FALSE);
 
-	if (path == NULL)
-		return NULL;
+  if (path == NULL) return NULL;
 
-	file = g_file_new_for_path (path);
-	g_free (path);
+  file = g_file_new_for_path(path);
+  g_free(path);
 
-	return file;
+  return file;
 }

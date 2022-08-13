@@ -37,21 +37,17 @@
 #define FILE_SHARING_BLUETOOTH_OBEXPUSH_NOTIFY "bluetooth-notify"
 
 typedef enum {
-    PASSWORD_NEVER,
-    PASSWORD_ON_WRITE,
-    PASSWORD_ALWAYS
+  PASSWORD_NEVER,
+  PASSWORD_ON_WRITE,
+  PASSWORD_ALWAYS
 } PasswordSetting;
 
-typedef enum {
-	ACCEPT_ALWAYS,
-	ACCEPT_BONDED,
-	ACCEPT_ASK
-} AcceptSetting;
+typedef enum { ACCEPT_ALWAYS, ACCEPT_BONDED, ACCEPT_ASK } AcceptSetting;
 
-const char *password_string_from_setting (PasswordSetting setting);
-PasswordSetting password_setting_from_string (const char *str);
+const char *password_string_from_setting(PasswordSetting setting);
+PasswordSetting password_setting_from_string(const char *str);
 
-const char *accept_string_from_setting (AcceptSetting setting);
-AcceptSetting accept_setting_from_string (const char *str);
+const char *accept_string_from_setting(AcceptSetting setting);
+AcceptSetting accept_setting_from_string(const char *str);
 
 #endif /* _USER_SHARE_PRIVATE_H_ */

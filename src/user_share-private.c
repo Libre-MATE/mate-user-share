@@ -23,81 +23,64 @@
  *
  */
 
-#include "config.h"
-
-#include <string.h>
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
 
 #include "user_share-private.h"
 
-static char *password_setting_strings[] = {
-    "never",
-    "on_write",
-    "always"
-};
+#include <string.h>
 
-static char *accept_file_strings[] = {
-    "always",
-    "bonded",
-    "ask"
-};
+static char *password_setting_strings[] = {"never", "on_write", "always"};
 
-const char *
-password_string_from_setting (PasswordSetting setting)
-{
+static char *accept_file_strings[] = {"always", "bonded", "ask"};
 
-    if (setting >= 0 && setting <= PASSWORD_ALWAYS)
-	return password_setting_strings[setting];
+const char *password_string_from_setting(PasswordSetting setting) {
+  if (setting >= 0 && setting <= PASSWORD_ALWAYS)
+    return password_setting_strings[setting];
 
-    /* Fallback on secure pref */
-    return password_setting_strings[PASSWORD_ALWAYS];
+  /* Fallback on secure pref */
+  return password_setting_strings[PASSWORD_ALWAYS];
 }
 
-PasswordSetting
-password_setting_from_string (const char *str)
-{
-    if (str != NULL) {
-	if (strcmp (str, "never") == 0) {
-	    return PASSWORD_NEVER;
-	}
-	if (strcmp (str, "always") == 0) {
-	    return PASSWORD_ALWAYS;
-	}
-	if (strcmp (str, "on_write") == 0) {
-	    return PASSWORD_ON_WRITE;
-	}
+PasswordSetting password_setting_from_string(const char *str) {
+  if (str != NULL) {
+    if (strcmp(str, "never") == 0) {
+      return PASSWORD_NEVER;
     }
-
-    /* Fallback on secure pref */
-    return PASSWORD_ALWAYS;
-}
-
-const char *
-accept_string_from_setting (AcceptSetting setting)
-{
-
-    if (setting >= 0 && setting <= ACCEPT_ASK)
-	return accept_file_strings[setting];
-
-    /* Fallback on secure pref */
-    return accept_file_strings[ACCEPT_BONDED];
-}
-
-AcceptSetting
-accept_setting_from_string (const char *str)
-{
-    if (str != NULL) {
-	if (strcmp (str, "always") == 0) {
-	    return ACCEPT_ALWAYS;
-	}
-	if (strcmp (str, "bonded") == 0 ||
-	    strcmp (str, "bonded_and_trusted") == 0) {
-	    return ACCEPT_BONDED;
-	}
-	if (strcmp (str, "ask") == 0) {
-	    return ACCEPT_ASK;
-	}
+    if (strcmp(str, "always") == 0) {
+      return PASSWORD_ALWAYS;
     }
+    if (strcmp(str, "on_write") == 0) {
+      return PASSWORD_ON_WRITE;
+    }
+  }
 
-    /* Fallback on secure pref */
-    return ACCEPT_BONDED;
+  /* Fallback on secure pref */
+  return PASSWORD_ALWAYS;
+}
+
+const char *accept_string_from_setting(AcceptSetting setting) {
+  if (setting >= 0 && setting <= ACCEPT_ASK)
+    return accept_file_strings[setting];
+
+  /* Fallback on secure pref */
+  return accept_file_strings[ACCEPT_BONDED];
+}
+
+AcceptSetting accept_setting_from_string(const char *str) {
+  if (str != NULL) {
+    if (strcmp(str, "always") == 0) {
+      return ACCEPT_ALWAYS;
+    }
+    if (strcmp(str, "bonded") == 0 || strcmp(str, "bonded_and_trusted") == 0) {
+      return ACCEPT_BONDED;
+    }
+    if (strcmp(str, "ask") == 0) {
+      return ACCEPT_ASK;
+    }
+  }
+
+  /* Fallback on secure pref */
+  return ACCEPT_BONDED;
 }
