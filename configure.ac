@@ -23,7 +23,8 @@ AC_INIT([mate-user-share],
 AC_PREREQ(2.60)
 AC_COPYRIGHT([Copyright (C) 2022 Libre MATE])
 AC_CONFIG_MACRO_DIR([m4])
-AM_INIT_AUTOMAKE([1.11 dist-xz no-dist-gzip silent-rules check-news])
+AM_INIT_AUTOMAKE([1.11 dist-xz no-dist-gzip check-news])
+AM_SILENT_RULES([yes])
 AC_CONFIG_HEADERS([config.h])
 AM_SANITY_CHECK
 AM_MAINTAINER_MODE
