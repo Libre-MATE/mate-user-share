@@ -50,7 +50,6 @@
 #define GSETTINGS_KEY_FILE_SHARING_BLUETOOTH_OBEXPUSH_NOTIFY "bluetooth-notify"
 
 static GtkBuilder *builder;
-static GSettings *settings;
 
 static void write_out_password(const char *password) {
   char *to_hash;
@@ -98,10 +97,10 @@ static void update_ui(void) {
 #ifdef HAVE_BLUETOOTH
   gboolean bluetooth_enabled, bluetooth_write_enabled, require_pairing_enabled;
   gboolean bluetooth_obexpush_enabled, bluetooth_obexpush_notify;
+  AcceptSetting accept_setting;
 #endif /* HAVE_BLUETOOTH */
   char *str;
   PasswordSetting password_setting;
-  AcceptSetting accept_setting;
   GtkWidget *check;
   GtkWidget *password_combo;
   GtkWidget *password_entry;
