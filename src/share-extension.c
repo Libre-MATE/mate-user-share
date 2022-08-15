@@ -211,6 +211,7 @@ static void caja_user_share_register_type(GTypeModule *module) {
       sizeof(CajaUserShare),
       0,
       (GInstanceInitFunc)caja_user_share_instance_init,
+      NULL
   };
 
   static const GInterfaceInfo location_widget_provider_iface_info = {
