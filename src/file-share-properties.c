@@ -57,10 +57,12 @@ static void write_out_password(const char *password) {
   char *line;
   char *filename;
   FILE *file;
+  size_t length;
 
   to_hash = g_strdup_printf("%s:%s:%s", USER, REALM, password);
+  length = strlen(to_hash);
   ascii_digest =
-      g_compute_checksum_for_string(G_CHECKSUM_MD5, to_hash, strlen(to_hash));
+      g_compute_checksum_for_string(G_CHECKSUM_MD5, to_hash, (gssize)length);
   g_free(to_hash);
   line = g_strdup_printf("%s:%s:%s\n", USER, REALM, ascii_digest);
   g_free(ascii_digest);
@@ -171,7 +173,7 @@ static void update_ui(void) {
   gtk_widget_set_sensitive(password_entry,
                            enabled && password_setting != PASSWORD_NEVER);
 
-  gtk_combo_box_set_active(GTK_COMBO_BOX(password_combo), password_setting);
+  gtk_combo_box_set_active(GTK_COMBO_BOX(password_combo), (gint) password_setting);
 
 #ifdef HAVE_BLUETOOTH
   /* Bluetooth ObexFTP */
@@ -252,16 +254,13 @@ static void file_sharing_bluetooth_obexpush_notify_changed(GSettings *settings,
 #endif /* HAVE_BLUETOOTH */
 
 static void password_combo_changed(GtkComboBox *combo_box) {
-  GSettings *settings;
-  guint setting;
-
-  setting = gtk_combo_box_get_active(combo_box);
-
-  settings = g_settings_new(GSETTINGS_SCHEMA);
-
-  g_settings_set_string(settings, FILE_SHARING_REQUIRE_PASSWORD,
-                        password_string_from_setting(setting));
-  g_object_unref(settings);
+  gint setting = gtk_combo_box_get_active(combo_box);
+  if (setting != -1) {
+    GSettings *settings = g_settings_new(GSETTINGS_SCHEMA);
+    g_settings_set_string(settings, FILE_SHARING_REQUIRE_PASSWORD,
+                          password_string_from_setting((PasswordSetting)setting));
+    g_object_unref(settings);
+  }
 }
 
 static void launch_share(void) {

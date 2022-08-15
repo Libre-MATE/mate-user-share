@@ -102,7 +102,7 @@ static char *truncate_name(const char *name) {
 
   end = g_utf8_find_prev_char(name, name + 64);
   g_assert(end != NULL);
-  return g_strndup(name, end - name);
+  return g_strndup(name, (gsize)(end - name));
 }
 
 static char *get_share_name(void) {
@@ -377,10 +377,10 @@ static void kill_httpd(void) {
 }
 
 void http_up(void) {
-  guint port;
+  int port;
 
   port = get_port();
-  if (!spawn_httpd(port, &httpd_pid)) {
+  if ((port < 0) ||  !spawn_httpd(port, &httpd_pid)) {
     fprintf(stderr, "spawning httpd failed\n");
   }
 }
