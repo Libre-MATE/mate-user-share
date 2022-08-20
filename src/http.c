@@ -107,11 +107,10 @@ static char *truncate_name(const char *name) {
 
 static char *get_share_name(void) {
   static char *name = NULL;
-  const char *host_name;
   char *str;
 
   if (name == NULL) {
-    host_name = g_get_host_name();
+    const char *host_name = g_get_host_name();
     if (strcmp(host_name, "localhost") == 0) {
       /* Translators: The %s will get filled in with the user name
          of the user, to form a genitive. If this is difficult to
@@ -130,6 +129,7 @@ static char *get_share_name(void) {
                              host_name);
     }
   }
+
   /* And truncate */
   if (strlen(name) < AVAHI_LABEL_MAX) return name;
 

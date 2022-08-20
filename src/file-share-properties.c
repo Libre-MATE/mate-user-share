@@ -81,14 +81,10 @@ static void write_out_password(const char *password) {
 }
 
 static void flush_password(void) {
-  GtkWidget *password_entry;
-  const char *password;
+  GObject *password_entry = gtk_builder_get_object(builder, "password_entry");
 
-  password_entry =
-      GTK_WIDGET(gtk_builder_get_object(builder, "password_entry"));
-
-  if (g_object_get_data(G_OBJECT(password_entry), "user_edited")) {
-    password = gtk_entry_get_text(GTK_ENTRY(password_entry));
+  if (g_object_get_data(password_entry, "user_edited")) {
+    const char *password = gtk_entry_get_text(GTK_ENTRY(password_entry));
     if (password != NULL && password[0] != 0) write_out_password(password);
   }
 }
@@ -582,14 +578,12 @@ static GtkWidget *create_window(void) {
 
 static void activate(GtkApplication *app) {
   GList *list;
-  GtkWidget *window;
 
   list = gtk_application_get_windows(app);
-
   if (list) {
     gtk_window_present(GTK_WINDOW(list->data));
   } else {
-    window = create_window();
+    GtkWidget *window = create_window();
     gtk_window_set_application(GTK_WINDOW(window), app);
     gtk_widget_show(window);
   }
