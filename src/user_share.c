@@ -54,7 +54,6 @@
 #include <unistd.h>
 
 static guint disabled_timeout_tag = 0;
-static GSettings *settings;
 
 #define GSETTINGS_SCHEMA "org.mate.FileSharing"
 #define GSETTINGS_KEY_FILE_SHARING_ENABLED "enabled"
@@ -192,7 +191,7 @@ static void bluez_init(void) {
 
 static gboolean file_sharing_enabled(void) {
   gboolean enabled = TRUE;
-  settings = g_settings_new(GSETTINGS_SCHEMA);
+  GSettings *settings = g_settings_new(GSETTINGS_SCHEMA);
 
 #ifdef HAVE_BLUETOOTH
   if (g_settings_get_boolean(settings, FILE_SHARING_ENABLED) == FALSE &&
