@@ -26,7 +26,6 @@
 #include <config.h>
 #endif
 
-#include <X11/Xlib.h>
 #include <gio/gio.h>
 #include <glib.h>
 #include <glib/gi18n.h>
