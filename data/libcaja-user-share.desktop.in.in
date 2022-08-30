@@ -5,4 +5,4 @@ Name=User Share
 Description=Integrates with user-share
 Copyright=Copyright (C) 2005 William Jon McCann <mccann@jhu.edu>
 Version=@VERSION@
-Website=https://mate-desktop.org/
+Website=@PACKAGE_URL@
