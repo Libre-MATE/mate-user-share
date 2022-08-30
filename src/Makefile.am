@@ -1,5 +1,6 @@
 
 MARSHALFILES = marshal.c marshal.h
+RESOURCEFILES = mate-user-share-resources.h mate-user-share-resources.c
 BUILT_SOURCES = $(MARSHALFILES)
 
 marshal.c: marshal.h
@@ -36,13 +37,16 @@ AM_CPPFLAGS= \
 	$(X_CFLAGS) \
 	$(WARN_CFLAGS)
 
+nodist_mate_user_share_SOURCES = $(MARSHALFILES)
 mate_user_share_SOURCES =	\
 	user_share.c		\
 	user_share-private.h	\
 	user_share-private.c	\
 	http.c			\
-	http.h			\
-	$(MARSHALFILES)
+	http.h
+
+mate-user-share-resources.h mate-user-share-resources.c: $(srcdir)/../data/org.mate.FileSharing.gresource.xml Makefile $(shell $(GLIB_COMPILE_RESOURCES) --generate-dependencies --sourcedir $(srcdir)/../data $(srcdir)/../data/org.mate.FileSharing.gresource.xml)
+	$(AM_V_GEN) XMLLINT=$(XMLLINT) $(GLIB_COMPILE_RESOURCES) --target $@ --sourcedir $(srcdir)/../data --generate --c-name file_sharing $<
 
 mate_user_share_LDADD =	\
 	libuser-share-common.la	\
@@ -59,6 +63,7 @@ mate_user_share_SOURCES += \
 mate_user_share_LDADD += $(BLUETOOTH_LIBS)
 endif
 
+nodist_mate_file_share_properties_SOURCES = $(RESOURCEFILES)
 mate_file_share_properties_SOURCES =	\
 	file-share-properties.c		\
 	user_share-private.h		\

@@ -410,7 +410,6 @@ static void help_button_clicked(GtkButton *button, GtkWidget *window) {
 }
 
 static GtkWidget *create_window(void) {
-  GError *error = NULL;
   GSettings *settings;
   GtkWidget *check;
   GtkWidget *password_combo;
@@ -428,21 +427,7 @@ static GtkWidget *create_window(void) {
   GtkCellRenderer *cell;
   GtkTreeIter iter;
 
-  builder = gtk_builder_new();
-  gtk_builder_add_from_file(builder, DATADIR "file-share-properties.ui",
-                            &error);
-
-  if (error) {
-    GtkWidget *dialog;
-
-    dialog =
-        error_dialog(_("Could not build interface."), error->message, NULL);
-    gtk_dialog_run(GTK_DIALOG(dialog));
-    gtk_widget_destroy(dialog);
-
-    g_error_free(error);
-    return NULL;
-  }
+  builder = gtk_builder_new_from_resource("/org/mate/desktop/file-sharing/properties.ui");
 
   window = GTK_WIDGET(gtk_builder_get_object(builder, "user_share_dialog"));
 

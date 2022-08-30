@@ -16,7 +16,7 @@ autostart_DATA = $(autostart_in_files:.desktop.in=.desktop)
 autostart_in_files = mate-user-share-obexftp.desktop.in mate-user-share-obexpush.desktop.in mate-user-share-webdav.desktop.in
 
 appdir = $(datadir)/mate-user-share
-app_DATA=dav_user_2.2.conf dav_user_2.4.conf dav_groupfile file-share-properties.ui
+app_DATA=dav_user_2.2.conf dav_user_2.4.conf dav_groupfile
 
 gsettings_SCHEMAS = org.mate.FileSharing.gschema.xml
 @GSETTINGS_RULES@
@@ -37,7 +37,8 @@ EXTRA_DIST = $(gsettings_SCHEMAS) \
 	mate-user-share-obexftp.desktop.in.in \
 	mate-user-share-obexpush.desktop.in.in \
 	mate-user-share-webdav.desktop.in.in \
-	file-share-properties.ui
+	org.mate.FileSharing.gresource.xml \
+	properties.ui
 
 CLEANFILES = $(extension_DATA) $(desktop_DATA) $(autostart_DATA)
 

@@ -1,11 +1,11 @@
 # List of source files containing translatable strings.
 # Please keep this file sorted alphabetically.
-data/file-share-properties.ui
 data/libcaja-user-share.desktop.in.in
 data/mate-user-share-properties.desktop.in
 data/mate-user-share-obexftp.desktop.in.in
 data/mate-user-share-obexpush.desktop.in.in
 data/mate-user-share-webdav.desktop.in.in
+data/properties.ui
 src/caja-share-bar.c
 src/share-extension.c
 src/file-share-properties.c
