@@ -1,8 +1,12 @@
 ACLOCAL_AMFLAGS = -I m4 ${ACLOCAL_FLAGS}
 
-SUBDIRS = po data src man help
+if USE_NLS
+PO_SUBDIR = po
+endif
 
-EXTRA_DIST =			\
+SUBDIRS = $(PO_SUBDIR) data src man help
+
+EXTRA_DIST = \
 	autogen.sh
 
 DISTCHECK_CONFIGURE_FLAGS = --disable-schemas-compile \

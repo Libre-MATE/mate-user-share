@@ -39,6 +39,7 @@ AC_PROG_CPP
 AC_PROG_INSTALL
 AC_PROG_LN_S
 AC_PROG_MAKE_SET
+AC_PROG_SED
 AC_PATH_XTRA
 PKG_PROG_PKG_CONFIG
 LT_INIT([disable-static])
@@ -203,11 +204,12 @@ Do note Apache >= 2.2 and mod_dnssd 0.6 are required to use mate-user-share.
        mate-user-share $VERSION
        `echo mate-user-share $VERSION | sed "s/./=/g"`
 
-       prefix:               ${prefix}
-       compiler:             ${CC}
-       cflags:               ${CFLAGS}
-       warning flags:        ${WARN_CFLAGS}
-       httpd location:       ${HTTPD}
-       httpd modules path:   ${MODULES_PATH}
-       caja extension path:  ${ac_with_cajadir}
+       prefix:                   ${prefix}
+       compiler:                 ${CC}
+       cflags:                   ${CFLAGS}
+       warning flags:            ${WARN_CFLAGS}
+       httpd location:           ${HTTPD}
+       httpd modules path:       ${MODULES_PATH}
+       caja extension path:      ${ac_with_cajadir}
+       Native Language support:  ${USE_NLS}
 "

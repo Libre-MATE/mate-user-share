@@ -1,7 +1,11 @@
 SUBDIRS = icons
 
 %.desktop: %.desktop.in
+if USE_NLS
 	$(AM_V_GEN) $(MSGFMT) --desktop --template $< -d $(top_srcdir)/po -o $@
+else
+	$(AM_V_GEN) $(SED) '/^# Translators/d' < $< > $@
+endif
 
 desktopdir = $(datadir)/applications
 desktop_DATA = $(desktop_in_files:.desktop.in=.desktop)
@@ -21,7 +25,11 @@ extensiondir = $(datadir)/caja/extensions
 extension_in_file = libcaja-user-share.desktop.in
 extension_DATA = $(extension_in_file:.desktop.in=.caja-extension)
 $(extension_DATA): $(extension_in_file)
+if USE_NLS
 	$(AM_V_GEN) $(MSGFMT) --desktop --keyword=Name --keyword=Description --template $< -d $(top_srcdir)/po -o $@
+else
+	$(AM_V_GEN) $(SED) '/^# Translators/d' < $< > $@
+endif
 
 EXTRA_DIST = $(gsettings_SCHEMAS) \
 	$(app_DATA)		\
