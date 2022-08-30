@@ -30,9 +30,9 @@
 #include <glib/gi18n-lib.h>
 #include <gtk/gtk.h>
 
-struct CajaShareBarPrivate {
+typedef struct {
   GtkWidget *label;
-};
+} CajaShareBarPrivate;
 
 enum { PROP_0, PROP_LABEL };
 
@@ -41,14 +41,13 @@ G_DEFINE_TYPE_WITH_PRIVATE(CajaShareBar, caja_share_bar, GTK_TYPE_INFO_BAR)
 static void caja_share_bar_set_property(GObject *object, guint prop_id,
                                         const GValue *value,
                                         GParamSpec *pspec) {
-  CajaShareBar *self;
+  CajaShareBarPrivate *priv;
 
-  self = CAJA_SHARE_BAR(object);
+  priv = caja_share_bar_get_instance_private(CAJA_SHARE_BAR(object));
 
   switch (prop_id) {
     case PROP_LABEL: {
-      gtk_label_set_text(GTK_LABEL(self->priv->label),
-                         g_value_get_string(value));
+      gtk_label_set_text(GTK_LABEL(priv->label), g_value_get_string(value));
       break;
     }
     default:
@@ -75,8 +74,9 @@ static void caja_share_bar_init(CajaShareBar *bar) {
   GtkWidget *vbox;
   GtkWidget *button;
   PangoAttrList *attrs;
+  CajaShareBarPrivate *priv;
 
-  bar->priv = caja_share_bar_get_instance_private(bar);
+  priv = caja_share_bar_get_instance_private(bar);
 
   content_area = gtk_info_bar_get_content_area(GTK_INFO_BAR(bar));
   action_area = gtk_info_bar_get_action_area(GTK_INFO_BAR(bar));
@@ -96,11 +96,11 @@ static void caja_share_bar_init(CajaShareBar *bar) {
   gtk_widget_show(label);
   gtk_container_add(GTK_CONTAINER(vbox), label);
 
-  bar->priv->label = gtk_label_new(NULL);
-  gtk_label_set_xalign(GTK_LABEL(bar->priv->label), 0.0);
-  gtk_label_set_yalign(GTK_LABEL(bar->priv->label), 0.5);
-  gtk_widget_show(bar->priv->label);
-  gtk_container_add(GTK_CONTAINER(vbox), bar->priv->label);
+  priv->label = gtk_label_new(NULL);
+  gtk_label_set_xalign(GTK_LABEL(priv->label), 0.0);
+  gtk_label_set_yalign(GTK_LABEL(priv->label), 0.5);
+  gtk_widget_show(priv->label);
+  gtk_container_add(GTK_CONTAINER(vbox), priv->label);
 
   button = gtk_info_bar_add_button(GTK_INFO_BAR(bar), _("Preferences"),
                                    CAJA_SHARE_BAR_RESPONSE_PREFERENCES);

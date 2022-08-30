@@ -29,35 +29,17 @@
 G_BEGIN_DECLS
 
 #define CAJA_TYPE_SHARE_BAR (caja_share_bar_get_type())
-#define CAJA_SHARE_BAR(o) \
-  (G_TYPE_CHECK_INSTANCE_CAST((o), CAJA_TYPE_SHARE_BAR, CajaShareBar))
-#define CAJA_SHARE_BAR_CLASS(k) \
-  (G_TYPE_CHECK_CLASS_CAST((k), CAJA_TYPE_SHARE_BAR, CajaShareBarClass))
-#define CAJA_IS_SHARE_BAR(o) \
-  (G_TYPE_CHECK_INSTANCE_TYPE((o), CAJA_TYPE_SHARE_BAR))
-#define CAJA_IS_SHARE_BAR_CLASS(k) \
-  (G_TYPE_CHECK_CLASS_TYPE((k), CAJA_TYPE_SHARE_BAR))
-#define CAJA_SHARE_BAR_GET_CLASS(o) \
-  (G_TYPE_INSTANCE_GET_CLASS((o), CAJA_TYPE_SHARE_BAR, CajaShareBarClass))
+G_DECLARE_DERIVABLE_TYPE(CajaShareBar, caja_share_bar, CAJA, SHARE_BAR,
+                         GtkInfoBar)
 
 #define CAJA_SHARE_BAR_RESPONSE_PREFERENCES 1
 
-typedef struct CajaShareBarPrivate CajaShareBarPrivate;
-
-typedef struct {
-  GtkInfoBar parent;
-
-  CajaShareBarPrivate *priv;
-} CajaShareBar;
-
-typedef struct {
+struct _CajaShareBarClass {
   GtkInfoBarClass parent_class;
 
   void (*activate)(CajaShareBar *bar);
+};
 
-} CajaShareBarClass;
-
-GType caja_share_bar_get_type(void);
 GtkWidget *caja_share_bar_new(const char *label);
 
 GtkWidget *caja_share_bar_get_button(CajaShareBar *bar);
