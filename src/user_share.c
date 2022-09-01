@@ -26,10 +26,14 @@
 #include <config.h>
 #endif
 
+#include <glib/gi18n.h>
+#ifdef ENABLE_NLS
+#include <locale.h>
+#endif /* ENABLE_NLS */
+
 #include <X11/Xlib.h>
 #include <gdk/gdkx.h>
 #include <gio/gio.h>
-#include <glib/gi18n.h>
 #include <glib/gstdio.h>
 #include <gtk/gtk.h>
 
@@ -365,9 +369,12 @@ int main(int argc, char **argv) {
   Window selection_owner;
   Atom xatom;
 
+#ifdef ENABLE_NLS
+  setlocale(LC_ALL, "");
   bindtextdomain(GETTEXT_PACKAGE, MATELOCALEDIR);
   bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8");
   textdomain(GETTEXT_PACKAGE);
+#endif /* ENABLE_NLS */
 
   gtk_init(&argc, &argv);
 
